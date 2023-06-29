@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes</title>
+  <link rel="stylesheet" type="text/css" href="static/notes.css">
+</head>
+<body>
+  <h1>Welcome, {{ session['username'] }}</h1>
+  <h2>Your Notes:</h2>
+  <div class="notes-container">
+    {% if user_notes %}
+        {% for note in user_notes %}
+            <div class="note">
+                <p>{{ note[2] }}</p>
+                <form action="{{ url_for('delete_note', note_id=note[0]) }}" method="POST">
+                    <button type="submit" class="delete-btn">Delete</button>
+                </form>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No notes found.</p>
+    {% endif %}
+</div>
+
+
+  <h2>Add a New Note:</h2>
+  <form action="{{ url_for('notes') }}" method="POST">
+    <textarea name="note_text" placeholder="Enter your note here" required></textarea>
+    <br>
+    <br>
+    <button type="submit">Add Note</button>
+  </form>
+  <br>
+  <a href="{{ url_for('logout') }}">Logout</a>
+  <br>
+</body>
+</html>
